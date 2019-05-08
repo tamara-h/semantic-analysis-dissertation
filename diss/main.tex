@@ -1,0 +1,169 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage[margin=1in]{geometry}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{todonotes}
+\usepackage[toc,page]{appendix}
+\usepackage[square,numbers]{natbib}
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+% \usepackage{mathpazo} % Palatino font
+
+\graphicspath{}
+
+\usepackage{fancyvrb}
+
+\usepackage{markdown}
+
+
+
+\newtheorem{theorem}{RQ}
+
+\lstdefinestyle{leftCode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily
+}
+
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+	
+	\center % Centre everything on the page
+	
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+	
+	\textsc{\LARGE University of Birmingham}\\[1.5cm] % Main heading such as the name of your university/college
+	
+	\textsc{\Large Department of Computer Science}\\[0.5cm] % Major heading such as course name
+	
+	\textsc{\large Dissertation for BSc. Mathematics and Computer Science}\\[0.5cm] % Minor heading such as course title
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	
+	\HRule\\[0.4cm]
+	
+	{\huge\bfseries Semantic Analysis of Text}\\[0.4cm] % Title of your document
+	
+	\HRule\\[1.5cm]
+	
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft}
+			\large
+			\textit{Author}\\
+			Tamara \textsc{Herbert} \\
+			1557437% Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright}
+			\large
+			\textit{Supervisor}\\
+			Leandro \textsc{Minku} % Supervisor's name
+		\end{flushright}
+	\end{minipage}
+	
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+	
+	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+	
+	{\large April  2019} % Date, change the \today to a set date if you want to be precise
+	
+	%------------------------------------------------
+	%	Logo
+	%------------------------------------------------
+	
+	%\vfill\vfill
+	\includegraphics[width=0.2\textwidth]{litImgs/birmingham.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	 
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Push the date up 1/4 of the remaining page
+	
+\end{titlepage}
+
+%-----------------
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\pagebreak
+\input{abstract.tex}
+\pagebreak
+
+\section{Introduction}
+
+Analysing the emotions behind a piece of text is not always an easy problem even for human readers, and trying to compute this is much harder.
+
+Sentiment analysis of text is a branch of Natural Language Processing where analysis is used to extract and identify subjective information from input data. This style of analytics has wide applications, primarily in marketing and customer service industries where materials such as social media and survey responses are utilised to provide intelligent information about a target market. 
+
+Many sentiment analysis tools that already exist predict whether input text is positive or negative, but very few attempt to obtain more detail about the more complex mood behind it. Understanding something as subjective as an emotion cannot always be put into these discrete binary classes, and as such, exploring whether an emotion can be represented by more than just this one dimension could hold significant value. Applications for establishing a more detailed emotion behind a text could be working out whether a customer who has a complaint about a product is angry or just disappointed, so that appropriate reimbursement can be suggested.
+
+Some existing projects look at how positive a piece of text is in more detail, sometimes ranking sentences on a scale between 1 and 10 but just an emotion over this single dimension is limiting, and exploring whether there is a better way to represent sentiment than this is an interesting topic.
+Extensive research has gone into producing sentiment analysis models over a positive-negative dimension with a high level of prediction accuracy, and using the results of these investigations to apply to a more complex emotive prediction model is something that this project aims to examine.
+
+We can formalise this into two main research questions that will be investigated as part of this project:
+
+\subsection{Research Questions}
+
+
+\begin{itemize}
+    \item   \begin{theorem} 
+                \label{RQ1}
+                \textnormal{How can textual sentiment prediction be optimised?}
+            \end{theorem}   
+    \item   \begin{theorem} 
+                \label{RQ2}
+                \textnormal{Is using more than 1 dimension to classify emotions useful?}
+            \end{theorem} 
+\end{itemize}
+
+After analysis of existing work and exploring what data is available, we can refine these questions further. 
+
+\pagebreak
+\input{body.tex}
+
+\section{Conclusion}
+
+From a personal perspective this project has been thoroughly enjoyable. I had almost no machine learning knowledge before starting, and I have learned more than I had anticipated. Being able to apply new techniques to tools that I was already familiar with has been has been an accomplishment, and I am happy with the final product that has been produced. 
+
+Things that I would do differently now would be to formalise the research questions at an earlier point so that less time was spent exploring things which ended up being unnecessary. I'd have also liked to have spent more time getting to know the data, so that the dependency between the classes could have been investigated further. 
+
+Keeping the VAD values in their original continuous form is also something that would be interesting to explore, and comparing results formed from an investigation into this, to the model used in this project would offer more insight into how the Emobank dataset can be utilised.
+
+Exploring ways in which an emotion can be represented, and using them to the greatest effect has been explored in this project. Future investigation of sentiment representation and analysis can be done with a better understanding by using what has been set out in this report, and more work can be done to attempt to quantify something as seemingly unquantifiable as a human emotion.
+
+\pagebreak
+
+\input{appendix.tex}
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{ref,lit}
+
+
+\end{document}

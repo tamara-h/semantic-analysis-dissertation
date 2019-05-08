@@ -1,0 +1,133 @@
+   
+\section{Methodology}
+ 
+To ensure RQ \ref{RQ1} is answered, a set of investigations will be carried out to directly answer the points brought up in the Problem Formulation, and by the use of hypothesis tests be able to come to solid conclusions. 
+
+To answer RQ \ref{RQ2}, an exploration into finding the optimal way to present an interface to gather user feedback will be carried out.
+
+\subsection{Data Imbalance}
+
+The initial issue faced when starting to attempt to build a prediction model was how to split the continuous variables supplied by the EmoBank dataset into discrete categories.
+
+The decision to split the data into discrete categories was done since it is easier to utilise classification methods produced by previous work as they tend to use discrete classes like Positive, Neutral and Negative to represent sentiment. The output data for each V,A,D value will be defined as one of a set number of classes, the same number of classes as the input.
+
+To discover the optimal way that the data can be split, the imbalance created over the dataset when the the classes are split in different ways will be analysed and compared. The imbalance over the data should ideally be as low as possible.
+
+\subsection{Hypothesis Tests}
+
+To argue for each of the decisions made when building the final model, a hypothesis test with a 95\% confidence level will be carried out.
+
+Due to the imbalance in the data, a prediction accuracy cannot be used for comparing the models. This is because the majority class dominates \cite{al2015applied}, heavily biasing the accuracy results.
+
+For each investigation,  a confusion matrix is be produced as shown in Table \ref{conmat}, so that proper analysis of the results can be made.
+
+\begin{table}
+\centering
+\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+ \hline
+  & \multicolumn{3}{|c|}{Predicted} & \\
+ \hline
+   Actual & Negative & Neutral & Positive & \\
+    \hline
+    Negative &  True Negative   &  False Negative  & False Negative & Total Negative \\
+    Neutral & False Neutral & True Neutral&  False Neutral & Total Neutral \\
+    Positive & False Positive & False Positive &  True Positive & Total Positive \\
+    \hline
+    & Total Predicted Negative & Total Predicted Neutral & Total Predicted Positive & \\
+ \hline
+\end{tabular}
+\caption{Structure of produced confusion matrices}
+\label{conmat}
+\end{table}
+
+The F1 score of the prediction model is used in the hypothesis tests. The F1 score for a class is the weighted average of the precision and recall of it, which is defined as follows: 
+
+$$ F1_{Class} = 2 * \frac{Precision_{Class} * Recall_{Class}}{Precision_{Class} + Recall_{Class}} $$
+
+And then the precision and recall values can be calculated as follows, calculated from the confusion matrix given in Table \ref{conmat}.
+For example, for the Negative class:
+
+$$ Precision_{Negative} = \frac{\textnormal{True Negative}}{\textnormal{Total Predicted Negative}} $$
+
+$$ Recall_{Negative} = \frac{\textnormal{True Negative}}{\textnormal{Total Negative}} $$
+
+It follows for the other two classes in the same format.
+
+Using this F1 score instead of the accuracy gets rid of the class bias, and in this case it is calculated using the micro-average of the K-Folds. The micro average aggregates the contributions of each class so that any imbalance can be mitigated. The resultant F1 score is given on a scale between 0 and 1, where 1 is perfect prediction.
+
+The hypothesis test that will be performed on the data will be the Wilcoxon Signed-Rank Test, since the comparison between the data will be on two related samples, and the data cannot be assumed to be normally distributed within the folds, meaning that this is the best test to be using in this case \cite{wilcoxon1970critical}.
+
+Each of the experiments will be run with stratified K-Fold validation, with the data from each fold being used for the hypothesis test comparisons, using 10 folds. The folds are stratified so that the representation of each class remains the same in each run, which is needed due to the large data imbalance \cite{kohavi1995study}.
+
+\subsection{Lexicon Analysis}
+
+For the bag-of-words model, we will calculate the confusion matrix and then the F1 score by totalling up the values for each sentence over the Emobank dataset, and then comparing the two results, the calculated values, and the ones given in Emobank sample. The values are calculated by looking up each word in the bag-of-words dataset and creating an average for the sentence.
+
+To get the words from the EmoBank dataset into a state where they are most likely to be found within the lexicon database, some natural language processing needs to be done on the data, using the NLTK \cite{NLTKBook} library to stem the words, returning them to their root form.
+
+For example, the word "Fishing" would be reduced to the word "Fish" after being stemmed. 
+
+As we can see from Figure \ref{lexiconGraph}, the average values for the Arousal are much lower across the bag-of-word dataset than the average values for the Valence or the Dominance, which may have an effect on the output results since the three dimensions in the EmoBank dataset have similar average values as shown in Figure \ref{dist:vad}.
+
+
+\subsection{Data Pre-processing (N-Gram and Feature selection)}
+
+Following R. Kim's investigations into semantic analysis \cite{towardsDS}, an investigation into optimising the format for the data input is carried out. 
+
+After countvectorizing the text, the number of features and N-Gram values are investigated. The previous investigation only tried N-Gram values ranging up to trigram, but to ensure that this is an optimal result, the experiment will be carried out up to fourgram.
+
+The range of features that was used previously was up to 10,0000 features because the results did not improve after this, but since we are using a different dataset, the number of features tested will be increased until the resultant graph implies that the F1 score does not improve further.
+
+The model used to investigate how the F1 score varies with these inputs will be a Logistic Regression classifier, as this has been shown to give the most promising results in previous work \cite{towardsDS}, and to compare the results in the hypothesis tests we will use the Valence dimension, as previous work uses the Valence of text to build their models and it will be easier to compare to them.
+
+\subsection{Model Selection}
+
+To choose the models to compare, we will take the top models in previous sentiment analysis tools and see which can work best in this situation. 
+
+In R. Kims investigations, Logistic Regression and Linear Support Vector Classification (SVC) were found to be the best so these will be part of the comparison, and we will set Logistic Regression to be used as a base to carry out initial comparisons. 
+Other models that will be investigated are Mulitnomial Naive Bayes and Bernoulli Naive Bayes since these are known to perform well with text based tasks \cite{socher2013recursive}, as well as including the computationally expensive models, K-Nearest Neighbours and Random Forests. 
+
+\subsection{Oversampling and Undersampling}
+
+To carry out the investigation of applying the oversampling and undersampling methods, the library functions in the imblearn API are used, which can be used in conjunction with the sklearn methods easily \cite{sklearn}.
+Since it is unclear whether these methods will actually improve the model, comparing against the base model that we already have at the point where this investigation is carried out is necessary. As set out in the Related Work, how these methods will perform will depend on how the data is set out into discrete classes.
+
+\subsection{Implementation}
+
+In terms of developing the sentiment analysis tool, using Python is a clear choice due to the number of NLP and machine learning libraries available. The main library that will be utilised is the sklearn library \cite{sklearn}, as it has many in-built machine learning classifiers that can be implemented easily, and there is plenty of documentation to support development with this. 
+
+Using other libraries such as Tensorflow is also applicable in this case,  and they are a powerful tool for building models that utilise neural networks, but in this case using the "off-the-shelf" classifiers given by the sklearn library is all we need.
+
+The simplest solution to provide an interface between the final produced semantic prediction model and the Spotify API, to relate the input text to the music, is to create a web application. The Spotify API is a service which can be used by developers to utilise user and song data within the service \cite{nodeSpotify}, allowing access to a large dataset of music where each song is annotated in with in depth information, such as the information shown in Listing \ref{spotifyJSON}.
+
+The final classification model will be hosted on a very simple python server that takes text as an input, and returns whether it classes the text as Positive, Negative or Neutral for each of the Valence, Arousal or Dominance dimensions, so that predictions can easily be made from a web application using HTTP requests. The final solution, as shown in Figure \ref{implementationLayout}, will consist of three distinct hosted solutions, two of which access the API hosted by Spotify to access song data.
+
+The UI has been chosen to be built in Angular.js and the music API with Node.js due to prior development knowledge, and hence ease of prototyping. 
+To ensure that any resultant song given back was one that the user could relate to, the final song is taken from a selection of the users recent top songs, which they allow the application access to through the authentication process.
+The music API, built in Node.js is influenced by the structure of existing Spotify API projects \cite{moodtape}, and is built mostly using the Node package spotify-web-api-node \cite{nodeSpotify}.
+
+\begin{figure}[ht]
+\caption{General layout of how the web application should be structured.}
+\centering
+\includegraphics[scale=0.6]{litImgs/interfaceLayout.png}
+\label{implementationLayout}
+\end{figure}
+
+Choosing how to relate the VAD values to the data returned for the songs is relatively arbitrary, and something that if there was more time could be investigated further. Since the song data returns a Valence value, it is obvious to map those two attributes together, and it was chosen to map the Arousal to the "Energy" attribute, and the Dominance to the "Danceability", but this is something that can be improved upon.
+
+The main goal of the implementation is to attempt to relate an emotion in text, which is subjective, to a song since that is also subjective. To help clarify whether the model is appropriate, the closest Ekman's emotion as given in Table \ref{ekmansTable} will be calculated and conveyed back to a test user for discussion, as well as a calculated song. This emotion will not be exact due to the choice of putting the variables into discrete classes and the closeness of some of the emotions as shown in Figure \ref{ekmans:graph}, but the result should help the users assess whether the given prediction is correct. The choice not to show the users the direct VAD values is made so that the users do not need an explanation of the structure to understand the emotion behind it. The Ekmans emotion will be calculated by finding the shortest distance between the calculated point and the values in Table \ref{ekmansTable}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=2]{litImgs/Ekmans3d.png}
+\caption{3D plot of the figures given in Table \ref{ekmansTable}}
+\label{ekmans:graph}
+\end{figure}
+
+
+To ensure RQ \ref{RQ2} is answered, the following questions will be set to the test users:
+
+\begin{itemize}
+    \item Do you believe the output song relates well to the text that you have input? Why?
+    \item Do you think this (calcuated Ekmans) emotion fits the text and the song well?
+\end{itemize}

@@ -1,0 +1,33 @@
+{
+  "name": "moodymusic",
+  "version": "1.0.0",
+  "description": "bit of a play around, ideas for FYP",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "serverless": "^1.27.2",
+    "serverless-http": "^1.5.5",
+    "serverless-offline": "^3.20.3",
+    "spotify-web-api-node": "^3.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tamara-h/moodyMusicAPI.git"
+  },
+  "author": "tamara-h",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tamara-h/moodyMusicAPI/issues"
+  },
+  "homepage": "https://github.com/tamara-h/moodyMusicAPI#readme"
+}

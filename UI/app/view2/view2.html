@@ -1,0 +1,41 @@
+
+<div class="view1_outside" layout="column">
+
+  <p class="question_title">Please describe how your week is going so far. Be as detailed as possible.</p>
+
+  <textarea
+          class="question_textbox"
+          ng-model="textboxhere"
+          [name="string"]
+          [required="string"]
+          [ng-required="string"]
+          [ng-minlength="number"]
+          [ng-maxlength="number"]
+          [ng-pattern="string"]
+          [ng-change="string"]
+          [ng-trim="boolean"]>
+        </textarea>
+
+
+  <div ng-model="output_text" class="buttonxsong">
+    <input type="button" class="btn btn-success button-small red_dark rounded3" value="Go" id="send" ng-click="sendText()" style="width:25%">
+    <input type="button" class="btn btn-success button-small red_normal rounded3" value="Random Text" id="random" ng-click="randomText()" style="width:25%">
+    <input ng-hide="!loggedIn" type="button" class="btn btn-success button-small red_light rounded3" value="Show Mood" id="actualLogin" ng-click="showMood()" style="width:25%">
+
+  </div>
+
+  <div ng-hide="!loggedIn" class="songDiv">
+    <iframe ng-src="{{songUrl}}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    <!--<br>-->
+    <!--<h2 ng-bind="v"></h2>-->
+
+    <!--<h2 ng-bind="a"></h2>-->
+
+    <!--<h2 ng-bind="d"></h2>-->
+  </div>
+
+  <div ng-hide="!moodShown">
+    <h2 ng-bind="mood"></h2>
+  </div>
+
+</div>

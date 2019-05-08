@@ -1,0 +1,32 @@
+\section{Problem Formulation}
+
+Coming to a decision to use the VAD structure to analyse the sentiment of text and selecting two valid datasets means that the research questions that were set out can be broken down further.
+
+\subsection{RQ 1}
+"How can textual sentiment prediction be optimised?" 
+\\ This can be refined into the following: 
+
+\begin{itemize}
+    \item Ensuring the input text into the model is best suited to the type of analysis that will be carried out over it. 
+    \item Analysing what the existing best text based sentiment prediction methods are, and adapting them for predicting VAD values. 
+    \item How to deal with a limited and imbalanced dataset, such as the Emobank dataset.
+\end{itemize}
+
+To be able to answer these points in a formal way, we can set the base structure of the sentiment prediction model that will be created as shown in Figure \ref{intial:flow}. 
+Text will be taken in in the form of sentences, and output values for the Valence, the Arousal and the Dominance will be produced. The output format of the model for each of these dimensions will be based on how the dataset is processed by the model, as the continuous values for the VAD dimensions will be turned into discrete variables which is looked at in more depth and analysed further.
+
+To deal with input sentences, they will be vectorized so that the model can deal with the data. This is a common way of dealing with text data \cite{towardsDS}, and turns a sentence into a sparse vector over the length of the whole vocabulary, with an integer count for the number of times a word has appeared in the sentence. Finding the best way to deal with the produced vectors will be explored further as part of an investigation into pre-processing the data. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{litImgs/initialFlow.png}
+\caption{Diagram showing the flow of data through the sentiment analysis model}
+\label{intial:flow}
+\end{figure}
+
+\subsection{RQ 2}
+"Is using more than 1 dimension to classify emotions useful?"
+\\ To refine this question we need to state what we can judge "usefulness" by in this context, and how we can make sure that this is quantified.
+
+To judge whether using more than 1 dimension to is useful, an investigation will be carried out that explores whether applications can be built with the resultant model that utilise the extra information in an effective way. To analyse whether a produced emotional rating is correct, we will also need to have user testing involved, since sentiment is such a subjective concept. The creation of a web application through which a user can accurately judge whether the output is correct provides a platform from which this can be investigated.
+
